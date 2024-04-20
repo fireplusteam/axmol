@@ -58,7 +58,7 @@ class Texture2D;
     sprite->setSpriteFrame(frame);
  @endcode
  */
-class AX_DLL SpriteFrame : public Object, public Clonable
+class AX_DLL SpriteFrame : public Object
 {
 public:
     /** Create a SpriteFrame with a texture filename, rect in points.
@@ -242,7 +242,7 @@ public:
     bool hasAnchorPoint() const;
 
     // Overrides
-    virtual SpriteFrame* clone() const override;
+    virtual SpriteFrame* clone() const;
 
     /** Set the polygon info for polygon mesh sprites
      *

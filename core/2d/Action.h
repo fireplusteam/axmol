@@ -51,7 +51,7 @@ enum
 /**
  * @brief Base class for Action objects.
  */
-class AX_DLL Action : public Object, public Clonable
+class AX_DLL Action : public Object
 {
 public:
     /** Default tag used for all the actions. */

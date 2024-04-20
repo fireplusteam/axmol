@@ -57,7 +57,7 @@ class SpriteFrame;
 
  @since v2.0
  */
-class AX_DLL AnimationFrame : public Object, public Clonable
+class AX_DLL AnimationFrame : public Object
 {
 public:
     /** @struct DisplayedEventInfo
@@ -121,7 +121,7 @@ public:
     void setUserInfo(const ValueMap& userInfo) { _userInfo = userInfo; }
 
     // Overrides
-    virtual AnimationFrame* clone() const override;
+    virtual AnimationFrame* clone() const;
 
     /**
      * @js ctor
@@ -159,7 +159,7 @@ private:
  * sprite->runAction(Animate::create(animation));
  * @endcode
  */
-class AX_DLL Animation : public Object, public Clonable
+class AX_DLL Animation : public Object
 {
 public:
     /** Creates an animation.
@@ -273,7 +273,7 @@ public:
     void setLoops(unsigned int loops) { _loops = loops; };
 
     // overrides
-    virtual Animation* clone() const override;
+    virtual Animation* clone() const;
 
     Animation();
     virtual ~Animation();
