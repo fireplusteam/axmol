@@ -57,7 +57,7 @@ class SpriteFrameCache;
     sprite->setSpriteFrame(frame);
  @endcode
  */
-class AX_DLL SpriteFrame : public Object, public Clonable
+class AX_DLL SpriteFrame : public Object
 {
     friend class SpriteFrameCache;
 
@@ -243,7 +243,7 @@ public:
     bool hasAnchorPoint() const;
 
     // Overrides
-    SpriteFrame* clone() const override;
+    virtual SpriteFrame* clone() const;
 
     /** Set the polygon info for polygon mesh sprites
      *

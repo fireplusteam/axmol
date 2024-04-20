@@ -55,7 +55,7 @@ class Node;
  * Used by CardinalSplineTo and (By) and CatmullRomTo (and By) actions.
  * @ingroup Actions
  */
-class AX_DLL PointArray : public Object, public Clonable
+class AX_DLL PointArray : public Object
 {
 public:
     /** Creates and initializes a Points array with capacity.
