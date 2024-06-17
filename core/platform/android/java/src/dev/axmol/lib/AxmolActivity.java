@@ -223,6 +223,11 @@ public abstract class AxmolActivity extends Activity implements AxmolEngineListe
     	Log.i(TAG, "onPause()");
 
         AxmolEngine.onPause();
+
+        // we need to pause a game engine on showing the ad because music can be playing in other case
+        rendererPaused = true;
+        mGLSurfaceView.onPause();
+
         mGLSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         mGLSurfaceView.handleOnPause();
 
