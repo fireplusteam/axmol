@@ -37,14 +37,16 @@ JNIEXPORT void JNICALL
 Java_dev_axmol_lib_AxmolRenderer_nativeTouchesBegin(JNIEnv*, jclass, jint id, jfloat x, jfloat y)
 {
     intptr_t idlong = id;
-    ax::Director::getInstance()->getGLView()->handleTouchesBegin(1, &idlong, &x, &y);
+    if (ax::Director::getInstance() && ax::Director::getInstance()->getGLView())
+        ax::Director::getInstance()->getGLView()->handleTouchesBegin(1, &idlong, &x, &y);
 }
 
 JNIEXPORT void JNICALL
 Java_dev_axmol_lib_AxmolRenderer_nativeTouchesEnd(JNIEnv*, jclass, jint id, jfloat x, jfloat y)
 {
     intptr_t idlong = id;
-    ax::Director::getInstance()->getGLView()->handleTouchesEnd(1, &idlong, &x, &y);
+    if (ax::Director::getInstance() && ax::Director::getInstance()->getGLView())
+        ax::Director::getInstance()->getGLView()->handleTouchesEnd(1, &idlong, &x, &y);
 }
 
 JNIEXPORT void JNICALL Java_dev_axmol_lib_AxmolRenderer_nativeTouchesMove(JNIEnv* env,
@@ -53,6 +55,8 @@ JNIEXPORT void JNICALL Java_dev_axmol_lib_AxmolRenderer_nativeTouchesMove(JNIEnv
                                                                                 jfloatArray xs,
                                                                                 jfloatArray ys)
 {
+    if (ax::Director::getInstance() == nullptr || ax::Director::getInstance()->getGLView() == nullptr)
+        return;
     int size = env->GetArrayLength(ids);
     jint id[size];
     jfloat x[size];
@@ -75,6 +79,9 @@ JNIEXPORT void JNICALL Java_dev_axmol_lib_AxmolRenderer_nativeTouchesCancel(JNIE
                                                                                   jfloatArray xs,
                                                                                   jfloatArray ys)
 {
+    if (ax::Director::getInstance() == nullptr || ax::Director::getInstance()->getGLView() == nullptr)
+        return;
+
     int size = env->GetArrayLength(ids);
     jint id[size];
     jfloat x[size];
@@ -119,6 +126,8 @@ JNIEXPORT jboolean JNICALL Java_dev_axmol_lib_AxmolRenderer_nativeKeyEvent(JNIEn
                                                                                  jint keyCode,
                                                                                  jboolean isPressed)
 {
+    if (ax::Director::getInstance() == nullptr || ax::Director::getInstance()->getEventDispatcher() == nullptr)
+        return JNI_FALSE;
     auto iterKeyCode = g_keyCodeMap.find(keyCode);
     if (iterKeyCode == g_keyCodeMap.end())
     {
