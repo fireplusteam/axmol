@@ -8,13 +8,13 @@ layout(location = POSITION) in vec3 v_vertexToPointLight;
 layout(location = COLOR0) in vec4 v_color;
 layout(location = TEXCOORD0) in vec2 v_texCoord;
 
-layout(binding = 0) uniform sampler2D u_tex0;
-layout(binding = 1) uniform sampler2D u_normalMap;
-layout(binding = 2) uniform samplerCube u_Env;
+layout(set = 1, binding = 0) uniform sampler2D u_tex0;
+layout(set = 1, binding = 1) uniform sampler2D u_normalMap;
+layout(set = 1, binding = 2) uniform samplerCube u_Env;
 
 const int maxNum = 6;
 
-layout(std140) uniform fs_ub
+layout(std140, set = 0, binding = 1) uniform fs_ub
 {
     vvec3_def(u_lightPos, maxNum);
     vvec3_def(u_lightColor, maxNum);
@@ -95,20 +95,20 @@ void main(void)
         float intensity = smoothstep(0.0, 1.0, (theta - vfloat_at(u_cutoffOuterSpotAngle, i)) / epsilon);
         combine += computeLight(normal, v_pos, i) * intensity;
     }
-    if (u_isSkyboxColor != 0)
-    {
-        float refractiveIndex = 1.00 / u_refractionIndex;
-        vec3 I                = normalize(v_vertexToPointLight - u_cameraPos);
-        vec3 normalizedNormal = normalize(normal);
-        vec3 refractColor     = texture(u_Env, refract(I, normalizedNormal, refractiveIndex)).rgb;
-        vec3 reflectColor     = texture(u_Env, reflect(I, normalizedNormal)).rgb;
+    // if (u_isSkyboxColor != 0)
+    // {
+    //     float refractiveIndex = 1.00 / u_refractionIndex;
+    //     vec3 I                = normalize(v_vertexToPointLight - u_cameraPos);
+    //     vec3 normalizedNormal = normalize(normal);
+    //     vec3 refractColor     = texture(u_Env, refract(I, normalizedNormal, refractiveIndex)).rgb;
+    //     vec3 reflectColor     = texture(u_Env, reflect(I, normalizedNormal)).rgb;
 
-        // Blending the effects
-        vec3 color = mix(texColor.rgb, reflectColor, u_reflectionRatio);
-        FragColor  = vec4(mix(color, refractColor, u_refractionRatio) * combine, texColor.a);
-    }
-    else
-    {
+    //     // Blending the effects
+    //     vec3 color = mix(texColor.rgb, reflectColor, u_reflectionRatio);
+    //     FragColor  = vec4(mix(color, refractColor, u_refractionRatio) * combine, texColor.a);
+    // }
+    // else
+    // {
         FragColor = vec4(texColor.rgb * combine, texColor.a);
-    }
+    // }
 }
